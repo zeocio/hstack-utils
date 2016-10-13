@@ -1,0 +1,125 @@
+<section name="RM_lists" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.eclipse.org/mat/report.xsd"
+	xsi:schemaLocation="http://www.eclipse.org/mat/report.xsd ../../../org.eclipse.mat.report/schema/report.xsd">
+    
+	<query name="info">
+		<param key="format" value="csv" />
+		<param key="filename" value="info.csv" />
+		<param key="html.separate_file" value="true" />	
+		<param key="html.show_table_header" value="false" />
+		<command>heap_dump_overview</command>
+	</query>
+	
+	<query name="System Properties">
+		<param key="format" value="csv" />
+		<param key="filename" value="System_Properties.csv" />
+		<param key="html.separate_file" value="true" />		
+		<param key="sort_column" value="Key=ASC" />
+		<param key="limit" value="1000" />		
+		<command>system_properties</command>
+	</query>
+	
+	<query name="Class Histogram">
+	    <param key="format" value="csv" />
+		<param key="filename" value="Class_Histogram.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="#3=DESC,#2=DESC,#1=DESC,#0" />
+		<param key="derived_data_column" value="_default_=APPROXIMATE" />
+		<param key="limit" value="50000" />
+		<command>histogram</command>
+	</query>
+
+<!--	<query name="List 10M Strings">
+		<param key="format" value="csv" />
+		<param key="filename" value="List_10M_Strings.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="ADDRESS" />
+		<param key="limit" value="10000000" />
+		<command>oql "select s.@objectAddress as ADDRESS, toString(s)as VALUE from java.lang.String s"</command>
+	</query>-->
+
+	<query name="java.net.URLs">
+		<param key="format" value="csv" />
+		<param key="filename" value="URLs.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="url_str" />
+		<param key="limit" value="10000000" />
+		<command>oql "select u, u.toString() AS url_str from java.net.URL u"</command>
+	</query>
+        
+	<query name="java.net.URIs">
+		<param key="format" value="csv" />
+		<param key="filename" value="URIs.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="uri_str" />
+		<param key="limit" value="10000000" />
+		<command>oql "select u, u.string.toString() AS uri_str from java.net.URI u"</command>
+	</query>
+
+	<query name="AppReport Builders">
+		<param key="format" value="csv" />
+		<param key="filename" value="AppRepBuilders.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="#1=ASC" />
+		<param key="limit" value="10000000" />
+		<command>oql "SELECT r, r.appReport.builder.trackingUrl_.toString(), r.appReport.builder.originalTrackingUrl_.toString() FROM org.apache.hadoop.yarn.server.webproxy.AppReportFetcher$FetchedAppReport r"</command>
+	</query>
+	<query name="AppAttemptImpls">
+		<param key="format" value="csv" />
+		<param key="filename" value="ATIs.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="#1=ASC" />
+		<param key="limit" value="10000000" />
+		<command>oql "SELECT ati, ati.originalTrackingUrl.toString(), ati.proxiedTrackingUrl.toString() FROM org.apache.hadoop.yarn.server.resourcemanager.rmapp.attempt.RMAppAttemptImpl ati"</command>
+	</query>
+	<query name="AppInfos">
+		<param key="format" value="csv" />
+		<param key="filename" value="AppInfos.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="#1=ASC" />
+		<param key="limit" value="10000000" />
+		<command>oql "SELECT ai, ai.appId.toString(), ai.originalTrackingUrl.toString(), ai.trackingUrl.toString() FROM org.apache.hadoop.yarn.server.webapp.dao.AppInfo ai"</command>
+	</query>
+	<query name="ARPBs">
+		<param key="format" value="csv" />
+		<param key="filename" value="ARPBs.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="#1=ASC" />
+		<param key="limit" value="10000000" />
+		<command>oql "SELECT b, b.trackingUrl_.toString(), b.originalTrackingUrl_.toString() FROM org.apache.hadoop.yarn.proto.YarnProtos$ApplicationReportProto$Builder b"</command>
+	</query>
+
+	<query name="props">
+		<param key="format" value="csv" />
+		<param key="filename" value="conf_props.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="#0=ASC" />
+		<param key="limit" value="10000000" />
+		<command>oql "SELECT e.key.toString(), e.value.toString() FROM java.util.Hashtable$Entry e WHERE (inbounds(e)[0] IN (SELECT rm.conf.properties.table.@objectId FROM org.apache.hadoop.yarn.server.resourcemanager.ResourceManager rm ))"</command>
+	</query>
+	<query name="overlays">
+		<param key="format" value="csv" />
+		<param key="filename" value="conf_overlay.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="#0=ASC" />
+		<param key="limit" value="10000000" />
+		<command>oql "SELECT e.key.toString(), e.value.toString() FROM java.util.Hashtable$Entry e WHERE (inbounds(e)[0] IN (SELECT rm.conf.overlay.table.@objectId FROM org.apache.hadoop.yarn.server.resourcemanager.ResourceManager rm ))"</command>
+	</query>
+	<query name="resources">
+		<param key="format" value="csv" />
+		<param key="filename" value="conf_resources.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="#0=ASC" />
+		<param key="limit" value="10000000" />
+		<command>oql "SELECT n, n.key.toString(), n.val[0].toString() FROM java.util.concurrent.ConcurrentHashMap$Node n WHERE (inbounds(n)[0] IN (SELECT rm.conf.updatingResource.table.@objectId FROM org.apache.hadoop.yarn.server.resourcemanager.ResourceManager rm ))"</command>
+	</query>
+
+	<query name="Thread Overview">
+		<param key="filename" value="Thread_Overview.csv" />
+		<param key="format" value="csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="Name,Object / Stack Frame" />
+		<param key="limit" value="1000" />
+		<command>thread_overview</command>
+	</query>		
+</section>
