@@ -29,14 +29,23 @@
 		<command>histogram</command>
 	</query>
 
-<!--	<query name="List 10M Strings">
+	<query name="List 10M bytearray">
+		<param key="format" value="csv" />
+		<param key="filename" value="List_10M_bytearray.csv" />
+		<param key="html.separate_file" value="true" />
+		<param key="sort_column" value="ADDRESS" />
+		<param key="limit" value="10000000" />
+		<command>oql "SELECT ba, ba.@objectAddress AS ADDRESS, toString(ba) FROM byte[] ba"</command>
+	</query>
+
+	<query name="List 10M Strings">
 		<param key="format" value="csv" />
 		<param key="filename" value="List_10M_Strings.csv" />
 		<param key="html.separate_file" value="true" />
 		<param key="sort_column" value="ADDRESS" />
 		<param key="limit" value="10000000" />
-		<command>oql "select s.@objectAddress as ADDRESS, toString(s)as VALUE from java.lang.String s"</command>
-	</query>-->
+		<command>oql "select s.@objectAddress AS ADDRESS, toString(s)as VALUE from java.lang.String s"</command>
+	</query>
 
 	<query name="java.net.URLs">
 		<param key="format" value="csv" />
