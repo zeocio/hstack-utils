@@ -6,7 +6,7 @@ import static com.sun.btrace.BTraceUtils.*;
 
 @BTrace public class YarnWebCalls {
     @OnMethod(
-	      clazz="/org\\.apache\\.hadoop\\.yarn.+(webapp|webproxy|http).+/",
+	      clazz="/org\\.apache\\.hadoop\\..*(webapp|webproxy|http).+/",
 	      method="/.+/"
     )
     public static void yarn1(@Self Object self, @ProbeClassName String pcm, @ProbeMethodName String pmn, AnyType[] args)
@@ -21,7 +21,7 @@ import static com.sun.btrace.BTraceUtils.*;
     }
 
     @OnMethod(
-	      clazz="/org\\.apache\\.hadoop\\.yarn.+(webapp|webproxy|http).+/",
+	      clazz="/org\\.apache\\.hadoop\\..*(webapp|webproxy|http).+/",
 	      method="/.+/",
 	      location=@Location(Kind.RETURN)
     )
